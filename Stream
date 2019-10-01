@@ -1,5 +1,30 @@
 mapToInt                                     menu.stream().mapToInt(Dish::getCalories).sum();
 mapToDouble
 mapToLong
-intStream - Interface supports  max, min, average and sum methods.
+IntStream - Interface supports  max, min, average, sum, range, rangeClosed, count,  methods.
 
+IntStream intStream = menu.stream().mapToInt(Dish::getCalories);
+Stream<Integer> stream = intStream.boxed();
+filter(b -> Math.sqrt(a*a + b*b) % 1 == 0)
+stream.filter(b -> Math.sqrt(a*a + b*b) % 1 == 0)
+.map(b -> new int[]{a, b, (int) Math.sqrt(a * a + b * b)});
+
+IntStream.rangeClosed(1, 100)
+.filter(b -> Math.sqrt(a*a + b*b) % 1 == 0)
+.boxed()
+.map(b -> new int[]{a, b, (int) Math.sqrt(a * a + b * b)});
+
+IntStream.rangeClosed(1, 100)
+.filter(b -> Math.sqrt(a*a + b*b) % 1 == 0)
+.mapToObj(b -> new int[]{a, b, (int) Math.sqrt(a * a + b * b)});
+
+Stream<int[]> pythagoreanTriples =
+IntStream.rangeClosed(1, 100).boxed()
+.flatMap(a ->IntStream.rangeClosed(a, 100)
+.filter(b -> Math.sqrt(a*a + b*b) % 1 == 0)
+.mapToObj(b ->
+new int[]{a, b, (int)Math.sqrt(a * a + b * b)})
+);
+pythagoreanTriples.limit(5)
+.forEach(t ->
+System.out.println(t[0] + ", " + t[1] + ", " + t[2]));
