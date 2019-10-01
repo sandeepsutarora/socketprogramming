@@ -109,10 +109,33 @@ Map<Boolean, Map<Dish.Type,List<Dish>> vegetarianDisheshByType = menu.stream().c
 Map<Boolean, Dish> mostCaloricPartitionedByVegetarian =menu.stream().collect(partitioningBy(Dish::isVegetarian,collectingAndThen(maxBy(comparingInt(Dish::getCalories)),Optional::get)));
 
 
+menu.stream().collect(partitioningBy(Dish::isVegetarian,partitioningBy(d -> d.getCalories() > 500)));
+menu.stream().collect(partitioningBy(Dish::isVegetarian,partitioningBy(Dish::getType)));
+menu.stream().collect(partitioningBy(Dish::isVegetarian,counting()));
 
 
+public boolean isPrime(int candidate) {int candidateRoot = (int) Math.sqrt((double) candidate);return IntStream.rangeClosed(2, candidateRoot).noneMatch(i -> candidate % i == 0);
+
+public Map<Boolean, List<Integer>> partitionPrimes(int n) {
+                                        return IntStream.rangeClosed(2, n).boxed().collect(partitioningBy(candidate -> isPrime(candidate)));
+                               }
 
 
+The static factory methods of the Collectors class
+List<Dish> dishes = menuStream.collect(toList());
+Set<Dish> dishes = menuStream.collect(toSet());
+Collection<Dish> dishes = menuStream.collect(toCollection(), ArrayList::new);
+long howManyDishes = menuStream.collect(counting());
+int totalCalories = menuStream.collect(summingInt(Dish::getCalories));
+double avgCalories = menuStream.collect(averagingInt(Dish::getCalories));
+IntSummaryStatistics menuStatistics =menuStream.collect(summarizingInt(Dish::getCalories));
+String shortMenu = menuStream.map(Dish::getName).collect(joining(", "));
+Optional<Dish> fattest = menuStream.collect(maxBy(comparingInt(Dish::getCalories)));
+Optional<Dish> lightest = menuStream.collect(minBy(comparingInt(Dish::getCalories)));
+int totalCalories = menuStream.collect(reducing(0, Dish::getCalories, Integer::sum));
+int howManyDishes = menuStream.collect(collectingAndThen(toList(), List::size));
+Map<Dish.Type, List<Dish>> dishesByType =menuStream.collect(groupingBy(Dish::getType));
+Map<Boolean, List<Dish>> vegetarianDishes = menuStream.collect(partitioningBy(Dish::isVegetarian));
 
 
 
