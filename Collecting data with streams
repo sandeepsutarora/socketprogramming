@@ -74,8 +74,6 @@ Map<Dish.Type, Map<CaloricLevel, List<Dish>> dishesByTypeCaloricLevel =
                                  );
                                  
 
-
-
 Map<Dish.Type, Long> typesCount = menu.stream().collect(groupingBy(Dish::getType, counting()));
 Map<Dish.Type, Optional<Dish>> mostCaloricByType = menu.stream() .collect(groupingBy(Dish::getType,maxBy(comparingInt(Dish::getCalories))));
 
@@ -99,7 +97,16 @@ else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
 else return CaloricLevel.FAT; },toCollection(HashSet::new) )));
 
 
+----------------------------------------Partitioning-------------------------------
+Map<Boolean, List<Dish>> partitionedMen = menu.stream().collect(partitioningBy(Dish::isVegetarian));
 
+List<Dish> vegetarianDishes =  menu.stream().filter(Dish::isVegetarian).collect(toList());
+
+Map<Boolean, Map<Dish.Type,List<Dish>> vegetarianDisheshByType = menu.stream().collect(partitioningBy(Dish::isVegetarian, 
+                                  groupingBy(Dish::getType)));
+                                  
+
+Map<Boolean, Dish> mostCaloricPartitionedByVegetarian =menu.stream().collect(partitioningBy(Dish::isVegetarian,collectingAndThen(maxBy(comparingInt(Dish::getCalories)),Optional::get)));
 
 
 
