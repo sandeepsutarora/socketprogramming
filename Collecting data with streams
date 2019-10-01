@@ -1,0 +1,15 @@
+Map<Currency, List<Transaction>> transactionsByCurrencies = transactions.stream().collect(groupingBy(Transaction::getCurrency));
+
+List<Transaction> transactions = transactionStream.collect(Collectors.toList());
+
+long howManyDishes = menu.stream().collect(Collectors.counting());
+You can write this far more directly as
+long howManyDishes = menu.stream().count();
+
+import static java.util.stream.Collectors.*;
+
+Comparator<Dish> dishCaloriesComparator =Comparator.comparingInt(Dish::getCalories);
+Optional<Dish> mostCalorieDish =menu.stream().collect(maxBy(dishCaloriesComparator));
+
+int totalCalories = menu.stream().collect(summingInt(Dish::getCalories));
+
