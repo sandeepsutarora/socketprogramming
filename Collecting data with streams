@@ -76,9 +76,29 @@ Map<Dish.Type, Map<CaloricLevel, List<Dish>> dishesByTypeCaloricLevel =
 
 
 
+Map<Dish.Type, Long> typesCount = menu.stream().collect(groupingBy(Dish::getType, counting()));
+Map<Dish.Type, Optional<Dish>> mostCaloricByType = menu.stream() .collect(groupingBy(Dish::getType,maxBy(comparingInt(Dish::getCalories))));
 
-                                               
-                                                
+Map<Dish.Type,Dish> mostCaloricByType = menu.stream().collect(groupingBy(Dish::getType,
+                                                              collectingAndThen(
+                                                                  maxBy(comparingInt(Dish::getCalories)}.
+                                                                  Optional::get)));
+
+Map<Dish.Type, Integer> totalCaloriesByType = menu.stream().collect(groupingBy(Dish::getType,summingInt(Dish::getCalories)));
+
+Map<Dish.Type, Set<CaloricLevel>> caloricLevelsByType = menu.stream().collect(
+groupingBy(Dish::getType, mapping(dish -> { if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL; else return CaloricLevel.FAT; }, toSet() )));
+                                                               
+
+
+Map<Dish.Type, Set<CaloricLevel>> caloricLevelsByType =
+menu.stream().collect(groupingBy(Dish::getType, mapping(
+dish -> { if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+else return CaloricLevel.FAT; },toCollection(HashSet::new) )));
+
+
 
 
 
