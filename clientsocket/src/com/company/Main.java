@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.SQLOutput;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
 
@@ -14,18 +15,27 @@ public class Main {
 	 try(Socket socket = new Socket("localhost",5000);)
      {
          BufferedReader echos = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-         PrintWriter stringToEcho = new PrintWriter(socket.getOutputStream());
+         PrintWriter stringToEcho = new PrintWriter(socket.getOutputStream(),true);
 
          Scanner scanner = new Scanner(System.in);
-         String echString;
-         StringBuffer response;
+         String echoString;
+         String response;
+         System.out.println("About to enter in do while loop");
          do{
              System.out.println("Enter String to be ecoched");
-             echString =  scanner.nextLine();
+             echoString =  scanner.nextLine();
+             stringToEcho.println(echoString);
+
+             if(!echoString.equals("exit"))
+             {
+
+                 response = echos.readLine();
+                 System.out.println(response);
+
+             }
 
 
-
-         }while (! echString.equals("exit"));
+         }while (! echoString.equals("exit"));
 
      }catch (IOException e)
      {
