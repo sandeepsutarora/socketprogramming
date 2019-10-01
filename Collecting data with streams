@@ -12,4 +12,9 @@ Comparator<Dish> dishCaloriesComparator =Comparator.comparingInt(Dish::getCalori
 Optional<Dish> mostCalorieDish =menu.stream().collect(maxBy(dishCaloriesComparator));
 
 int totalCalories = menu.stream().collect(summingInt(Dish::getCalories));
+double avgCalories = menu.stream().collect(averagingInt(Dish::getCalories));
+
+Collectors.summingLong Collectors.summingDouble
+
+IntSummaryStatistics menuStatistics = menu.stream().collect(summarizingInt(Dish::getCalories));
 
