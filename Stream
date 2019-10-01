@@ -1,0 +1,5 @@
+mapToInt                                     menu.stream().mapToInt(Dish::getCalories).sum();
+mapToDouble
+mapToLong
+intStream - Interface supports  max, min, average and sum methods.
+
